@@ -1,10 +1,11 @@
 ﻿#include <iostream>
-using namespace std;
+#include <map>
 
 class cashRegister {
 private:
     int cashOnHand;
 public:
+
     cashRegister() {
         cashOnHand = 500; //опредлеяет количество денег в кассе равным 500
     }
@@ -26,9 +27,10 @@ class dispenserType {
 private:
     int numberOfItems;
     int itemCost;
+    int cashOnHand;
 public:
     dispenserType() {  // устанавливает стоимость и кол-во предметов в диспенсере по 50 штук
-        numberOfItems = 50; 
+        dispenserType::numberOfItems = 50;
         itemCost = 1;
     }
 
@@ -50,9 +52,30 @@ public:
             numberOfItems--;
         }
         else {
-            cout << "Sorry, this item is out of stock." << endl; // нет в наличии товара
+            std::cout << "Sorry, this item is out of stock." << std::endl; // нет в наличии товара
         }
     }
+    bool isAvailable() const // проверяет наличие товара?
+    {
+        return numberOfItems > 0;
+    }
+
+};
+std::map<int, int> calculateChange(int total, int payment) {
+    int denominations[] = { 100, 50, 20, 10, 5, 2, 1 };  // номиналы монет или купюр
+    std::map<int, int> changeMap; // контейнер для хранения количества монет разного номинала
+
+    int change = payment - total; // вычисляем сдачу
+
+    for (int denom : denominations) {
+        int numDenom = change / denom;
+        if (numDenom > 0) {
+            changeMap[denom] = numDenom;
+            change -= numDenom * denom;
+        }
+    }
+
+    return changeMap;
 };
 
 int main() {
@@ -63,59 +86,93 @@ int main() {
     dispenserType gum(1, 25);
     dispenserType cookies(3, 75);
 
-    cout << "welcome to the vending machine!" << endl;
-    cout << "our products: " << endl;
-    cout << "all prices are written in russian rubles: " << endl;
-    cout << "1. candy  " << candy.getCost() << endl;
-    cout << "2. chips  " << chips.getCost() << endl;
-    cout << "3. gum  " << gum.getCost() << endl;
-    cout << "4. cookies " << cookies.getCost() << endl;
+    std::cout << "welcome to the vending machine!" << std::endl;
+    std::cout << "our products: " << std::endl;
+    std::cout << "all prices are written in russian rubles: " << std::endl;
+    std::cout << "1. candy  " << candy.getCost() << std::endl;
+    std::cout << "2. chips  " << chips.getCost() << std::endl;
+    std::cout << "3. gum  " << gum.getCost() << std::endl;
+    std::cout << "4. cookies " << cookies.getCost() << std::endl;
 
     int choice;
-    cout << "enter the number of the product you want to buy: ";
-    cin >> choice;
+    std::cout << "enter the number of the product you want to buy: ";
+    std::cin >> choice;
 
     switch (choice) {
     case 1:
-        cout << "the cost of candy is " << candy.getCost() << endl;
+        std::cout << "the cost of candy is " << candy.getCost() << std::endl;
         break;
     case 2:
-        cout << "the cost of chips is " << chips.getCost() << endl;
+        std::cout << "the cost of chips is " << chips.getCost() << std::endl;
         break;
     case 3:
-        cout << "the cost of gum is " << gum.getCost() << endl;
+        std::cout << "the cost of gum is " << gum.getCost() << std::endl;
         break;
     case 4:
-        cout << "the cost of cookies is " << cookies.getCost() << endl;
+        std::cout << "the cost of cookies is " << cookies.getCost() << std::endl;
         break;
     default:
-        cout << "invalid choice." << endl;
+        std::cout << "invalid choice." << std::endl;
         break;
     }
-
+    int amount1;
     int amount;
-    cout << "please enter the amount of money: ";
-    cin >> amount;
+    std::cout << "please enter the amount of money: ";
+    std::cin >> amount;
 
     register1.acceptAmount(amount);
-
+    int change;
     switch (choice) {
     case 1:
-        candy.makeSale();
+        if (amount = candy.getCost()) {
+            candy.makeSale();
+        }
+        else {
+            std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
+            std::cout << "top up your deposit." << std::endl;
+        }
         break;
-    case 2:
-        chips.makeSale();
+        case 2:
+        if (amount >= chips.getCost()) {
+            chips.makeSale();
+            amount -= chips.getCost();
+        }
+        else {
+            std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
+            std::cout << "top up your deposit." << std::endl;
+        }
+        
         break;
     case 3:
-        gum.makeSale();
-        break;
+        if (amount >= gum.getCost()) {
+            gum.makeSale();
+            amount -= gum.getCost();
+        }
+        else {
+            std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
+            std::cout << "top up your deposit." << std::endl;
+        }
+       break;
     case 4:
-        cookies.makeSale();
+        if (amount >= cookies.getCost()) {
+            cookies.makeSale();
+            amount -= cookies.getCost();
+        }
+        else {
+            std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
+            std::cout << "top up your deposit." << std::endl;
+        }
         break;
+    
+           
+
     }
+    
+   
+         
+        
 
-    cout << "thank you for your purchase!" << endl;
-
+    std::cout << "thank you for your purchase!" << std::endl;
     return 0;
 }
 
