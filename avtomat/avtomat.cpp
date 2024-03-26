@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <map>
+//#include <map>
 
 class cashRegister {
 private:
@@ -61,22 +61,22 @@ public:
     }
 
 };
-std::map<int, int> calculateChange(int total, int payment) {
-    int denominations[] = { 100, 50, 20, 10, 5, 2, 1 };  // номиналы монет или купюр
-    std::map<int, int> changeMap; // контейнер для хранения количества монет разного номинала
-
-    int change = payment - total; // вычисляем сдачу
-
-    for (int denom : denominations) {
-        int numDenom = change / denom;
-        if (numDenom > 0) {
-            changeMap[denom] = numDenom;
-            change -= numDenom * denom;
-        }
-    }
-
-    return changeMap;
-};
+//std::map<int, int> calculateChange(int total, int payment) {
+//int denominations[] = { 100, 50, 20, 10, 5, 2, 1 }; // номиналы монет или купюр
+//std::map<int, int> changeMap; // контейнер для хранения количества монет разного номинала
+//
+//int change = payment - total; // вычисляем сдачу
+//
+//for (int denom : denominations) {
+//int numDenom = change / denom;
+//if (numDenom > 0) {
+//changeMap[denom] = numDenom;
+//change -= numDenom * denom;
+//}
+//}
+//
+//return changeMap;
+//};
 
 int main() {
     cashRegister register1;
@@ -124,8 +124,11 @@ int main() {
     int change;
     switch (choice) {
     case 1:
-        if (amount = candy.getCost()) {
+        if (amount >= candy.getCost()) {
             candy.makeSale();
+            amount -= candy.getCost();
+            std::cout << "thank you for your purchase!" << std::endl;
+           
         }
         else {
             std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
@@ -136,6 +139,8 @@ int main() {
         if (amount >= chips.getCost()) {
             chips.makeSale();
             amount -= chips.getCost();
+            std::cout << "thank you for your purchase!" << std::endl;
+            
         }
         else {
             std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
@@ -147,6 +152,8 @@ int main() {
         if (amount >= gum.getCost()) {
             gum.makeSale();
             amount -= gum.getCost();
+            std::cout << "thank you for your purchase!" << std::endl;
+           
         }
         else {
             std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
@@ -157,6 +164,8 @@ int main() {
         if (amount >= cookies.getCost()) {
             cookies.makeSale();
             amount -= cookies.getCost();
+            std::cout << "thank you for your purchase!" << std::endl;
+            
         }
         else {
             std::cout << "insufficient funds. transaction canceled." << std::endl; // // недостаточно средств
@@ -172,7 +181,7 @@ int main() {
          
         
 
-    std::cout << "thank you for your purchase!" << std::endl;
-    return 0;
+    //std::cout << "thank you for your purchase!" << std::endl;
+    //return 0;
 }
 
